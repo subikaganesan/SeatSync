@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SeatSync | Student Data</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="logo">
+            SeatSync
+            <span>Examination Portal</span>
+        </div>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="container">
+
+        <!-- PAGE TITLE -->
+
+        <div class="page-title">
+
+            <h1>
+                Student Data Preview
+            </h1>
+
+            <p>
+                All uploaded department files have been
+                combined successfully.
+            </p>
+
+        </div>
+
+
+        <!-- UPLOADED FILES -->
+
+        <div class="card">
+
+            <h2>
+                Uploaded Files
+            </h2>
+
+            <p>
+                The following files were uploaded:
+            </p>
+
+
+            <ul class="uploaded-file-list">
+
+                {% for file in uploaded_files %}
+
+                <li>
+                    📄 {{ file }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+
+        <!-- TOTAL STUDENTS -->
+
+        <div class="card">
+
+            <h2>
+                Student Summary
+            </h2>
+
+
+            <div class="info-grid">
+
+                <div class="info-box">
+
+                    <div class="label">
+                        Total Students
+                    </div>
+
+                    <div class="value">
+                        {{ total_students }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="label">
+                        Department Files
+                    </div>
+
+                    <div class="value">
+                        {{ uploaded_files|length }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DEPARTMENT SUMMARY -->
+
+        <div class="card">
+
+            <h2>
+                Department-wise Student Count
+            </h2>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Department
+                            </th>
+
+                            <th>
+                                Students
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for department, count in department_counts.items() %}
+
+                        <tr>
+
+                            <td>
+                                {{ department }}
+                            </td>
+
+                            <td>
+                                {{ count }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- YEAR SUMMARY -->
+
+        <div class="card">
+
+            <h2>
+                Year-wise Student Count
+            </h2>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Year
+                            </th>
+
+                            <th>
+                                Students
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for year, count in year_counts.items() %}
+
+                        <tr>
+
+                            <td>
+                                {{ year }}
+                            </td>
+
+                            <td>
+                                {{ count }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- STUDENT DATA -->
+
+        <div class="card">
+
+            <h2>
+                Combined Student Records
+            </h2>
+
+            <p>
+                Review the combined student data below.
+            </p>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            {% for column in students[0].keys() %}
+
+                            <th>
+                                {{ column }}
+                            </th>
+
+                            {% endfor %}
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for student in students %}
+
+                        <tr>
+
+                            {% for value in student.values() %}
+
+                            <td>
+                                {{ value }}
+                            </td>
+
+                            {% endfor %}
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- NEXT STEP -->
+
+        <div class="card">
+
+            <div class="action-area">
+
+                <h2>
+                    Student Data Verified?
+                </h2>
+
+                <p>
+                    If the student information looks correct,
+                    continue to configure the examination halls.
+                </p>
+
+
+                <form
+                    action="/exam-hall"
+                    method="GET"
+                >
+
+                    <button type="submit">
+                        Continue to Exam & Hall Details →
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        SeatSync &nbsp;|&nbsp;
+        Examination Seating Management Portal
+
+    </footer>
+
+
+</body>
+
+</html>
+```

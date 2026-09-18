@@ -1,0 +1,4 @@
+uploads/
+generated_pdfs/
+__pycache__/
+*.pyc

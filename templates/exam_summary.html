@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SeatSync | Exam Summary</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="logo">
+            SeatSync
+            <span>Examination Portal</span>
+        </div>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="container">
+
+        <!-- PAGE TITLE -->
+
+        <div class="page-title">
+
+            <h1>Exam & Hall Summary</h1>
+
+            <p>
+                Review the examination and hall details
+                before generating the seating arrangement.
+            </p>
+
+        </div>
+
+
+        <!-- EXAM DETAILS -->
+
+        <div class="card">
+
+            <h2>Exam Details</h2>
+
+            <div class="info-grid">
+
+                <div class="info-box">
+
+                    <div class="label">
+                        Exam Name
+                    </div>
+
+                    <div class="value">
+                        {{ exam_name }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="label">
+                        Exam Date
+                    </div>
+
+                    <div class="value">
+                        {{ exam_date }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="label">
+                        Exam Time
+                    </div>
+
+                    <div class="value">
+                        {{ exam_time }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STUDENT SUMMARY -->
+
+        <div class="card">
+
+            <h2>Student Summary</h2>
+
+            <div class="info-grid">
+
+                <div class="info-box">
+
+                    <div class="label">
+                        Total Students
+                    </div>
+
+                    <div class="value">
+                        {{ total_students }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="label">
+                        Total Available Capacity
+                    </div>
+
+                    <div class="value">
+                        {{ total_capacity }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="label">
+                        Number of Halls
+                    </div>
+
+                    <div class="value">
+                        {{ halls|length }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HALL DETAILS -->
+
+        <div class="card">
+
+            <h2>Available Examination Halls</h2>
+
+            {% for hall in halls %}
+
+            <div class="hall-summary-card">
+
+                <div class="hall-summary-header">
+
+                    <h3>
+                        Hall {{ loop.index }} — {{ hall.hall_name }}
+                    </h3>
+
+                </div>
+
+
+                <div class="info-grid">
+
+                    <div class="info-box">
+
+                        <div class="label">
+                            Hall Name
+                        </div>
+
+                        <div class="value">
+                            {{ hall.hall_name }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="label">
+                            Rows
+                        </div>
+
+                        <div class="value">
+                            {{ hall.rows }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="label">
+                            Columns
+                        </div>
+
+                        <div class="value">
+                            {{ hall.columns }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="label">
+                            Seats per Bench
+                        </div>
+
+                        <div class="value">
+                            {{ hall.seats_per_bench }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="label">
+                            Total Benches
+                        </div>
+
+                        <div class="value">
+                            {{ hall.total_benches }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <div class="label">
+                            Hall Capacity
+                        </div>
+
+                        <div class="value">
+                            {{ hall.capacity }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- CAPACITY INFORMATION -->
+
+        <div class="card">
+
+            <h2>Capacity Information</h2>
+
+            <div class="capacity-box">
+
+                <h3>
+                    ✅ Total Capacity is Sufficient
+                </h3>
+
+                <p>
+                    {{ total_students }}
+                    students can be accommodated
+                    in {{ total_capacity }} available seats.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- SEATING RULE -->
+
+        <div class="card">
+
+            <h2>Seating Rule</h2>
+
+            <div class="rule-box">
+
+                <p>
+                    <strong>Bench Rule:</strong>
+                    Students from the same academic year
+                    will not be placed on the same bench.
+                </p>
+
+                <p>
+                    Students from different academic years
+                    can share a bench.
+                </p>
+
+                <p>
+                    A bench can contain one or two students,
+                    depending on availability.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- GENERATE BUTTON -->
+
+        <div class="card">
+
+            <div class="action-area">
+
+                <h2>
+                    Ready to Generate?
+                </h2>
+
+                <p>
+                    All examination and hall details have
+                    been reviewed. Click below to generate
+                    the optimized seating arrangement.
+                </p>
+
+
+                <form
+                    action="/generate-seating"
+                    method="POST"
+                >
+
+                    <button type="submit">
+                        Generate Seating Arrangement
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        SeatSync &nbsp;|&nbsp;
+        Examination Seating Management Portal
+
+    </footer>
+
+
+</body>
+
+</html>

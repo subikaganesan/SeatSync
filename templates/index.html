@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SeatSync | Examination Portal</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="logo">
+            SeatSync
+            <span>Examination Portal</span>
+        </div>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="container">
+
+        <div class="page-title">
+
+            <h1>
+                Smart Examination Seating
+            </h1>
+
+            <p>
+                Upload department-wise student data
+                and generate an organized examination
+                hall seating arrangement.
+            </p>
+
+        </div>
+
+
+        <!-- UPLOAD CARD -->
+
+        <div class="card">
+
+            <h2>
+                Upload Student Data
+            </h2>
+
+            <p>
+                Select one or more department files
+                containing student information.
+            </p>
+
+
+            <form
+                action="/upload"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                <div class="form-group">
+
+                    <label for="student_files">
+                        Student Data Files
+                    </label>
+
+                    <input
+                        type="file"
+                        id="student_files"
+                        name="student_files"
+                        accept=".csv,.xlsx"
+                        multiple
+                        required
+                    >
+
+                    <small>
+                        You can select multiple files,
+                        such as CSE.xlsx, ECE.xlsx,
+                        IT.xlsx and BME.xlsx.
+                    </small>
+
+                </div>
+
+
+                <!-- SELECTED FILES -->
+
+                <div
+                    id="file-list"
+                    class="file-list"
+                >
+                </div>
+
+
+                <div class="action-area">
+
+                    <button type="submit">
+                        Upload Student Data →
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- INFORMATION CARD -->
+
+        <div class="card">
+
+            <h2>
+                Required Student Details
+            </h2>
+
+            <p>
+                Every uploaded file must contain
+                these four columns:
+            </p>
+
+
+            <ul>
+
+                <li>
+                    <strong>Register Number</strong>
+                </li>
+
+                <li>
+                    <strong>Name</strong>
+                </li>
+
+                <li>
+                    <strong>Department</strong>
+                </li>
+
+                <li>
+                    <strong>Year</strong>
+                </li>
+
+            </ul>
+
+
+            <p>
+                Each file can contain students from
+                <strong>1st, 2nd, 3rd and 4th year</strong>.
+            </p>
+
+        </div>
+
+
+        <!-- SEATING RULE CARD -->
+
+        <div class="card">
+
+            <h2>
+                Seating Rule
+            </h2>
+
+            <p>
+                SeatSync will automatically arrange
+                students so that:
+            </p>
+
+
+            <ul>
+
+                <li>
+                    Students from the <strong>same year</strong>
+                    will not share a bench.
+                </li>
+
+                <li>
+                    Students from <strong>different years</strong>
+                    can share a bench.
+                </li>
+
+                <li>
+                    A bench can contain
+                    <strong>1 or 2 students</strong>.
+                </li>
+
+                <li>
+                    Department does <strong>not</strong>
+                    restrict bench sharing.
+                </li>
+
+            </ul>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        SeatSync &nbsp;|&nbsp;
+        Examination Seating Management Portal
+
+    </footer>
+
+
+    <!-- SHOW SELECTED FILES -->
+
+    <script>
+
+        const fileInput =
+            document.getElementById("student_files");
+
+        const fileList =
+            document.getElementById("file-list");
+
+
+        fileInput.addEventListener(
+            "change",
+            function () {
+
+                fileList.innerHTML = "";
+
+
+                if (this.files.length === 0) {
+                    return;
+                }
+
+
+                const heading =
+                    document.createElement("p");
+
+                heading.innerHTML =
+                    "<strong>Selected Files:</strong>";
+
+                fileList.appendChild(heading);
+
+
+                const list =
+                    document.createElement("ul");
+
+
+                for (
+                    let i = 0;
+                    i < this.files.length;
+                    i++
+                ) {
+
+                    const item =
+                        document.createElement("li");
+
+                    item.textContent =
+                        this.files[i].name;
+
+                    list.appendChild(item);
+                }
+
+
+                fileList.appendChild(list);
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>
+```
